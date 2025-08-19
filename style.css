@@ -1,0 +1,61 @@
+header
+{
+    border-style:none;
+    font-size:xx-large;
+    font-weight:bold;
+    background-color: rgb(62, 72, 131);
+    margin-bottom: 10px;
+    padding-left: 10px;
+    text-align: justify;
+}
+footer
+{
+    background-color: rgb(160, 154, 154);
+    position:fixed;
+    bottom: 0;
+}
+.input_testo
+{
+    border-style: inset;
+    border-color: cadetblue;
+    width: 30ch;
+}
+.input_numero
+{
+    border-style: inset;
+    border-color: cadetblue;
+    width: 10ch;
+}
+body
+{
+    background-color:cornflowerblue;
+    color: black;
+    font-family: monospace;
+}
+
+button
+{
+    height: 30px;
+    width: 60px;
+    text-align: center;
+}
+
+div {
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+label {
+  display: inline-block;
+  width: 110px;
+}
+
+input:invalid + span::after {
+  content: "✖";
+  padding-left: 5px;
+}
+input:valid + span::after {
+  content: "✓";
+  padding-left: 5px;
+}
