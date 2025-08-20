@@ -1,5 +1,3 @@
-let fileHandle;
-
 async function SaveFile()
 {
     console.log("Salvataggio Scontrino");
@@ -15,6 +13,7 @@ async function SaveFile()
     },],
     };
 
+    let fileHandle;
     [fileHandle] = await window.showSaveFilePicker(opts);
 }
 
@@ -55,26 +54,28 @@ function GeneraDati(ok, min, max, pesomin, pesomax)
   return pesate;
 }
 
+function FormatDate(date)
+{
+  return date.getDate().toString().padStart(2,"0") + "/" + 
+  (date.getMonth()+1).toString().padStart(2,"0") + "/" +
+  date.getFullYear().toString().substr(2,2) + "  " +
+  date.getHours().toString().padStart(2,"0") + ":" +
+  date.getMinutes().toString().padStart(2,"0") + ":" +
+  date.getSeconds().toString().padStart(2,"0");
+}
+
 function SaveTextFile()
 {
+  let Float1ToString = (num) => (num.toFixed(1).toString()).replace(".", ",");
   let PadInt7 = (num) => num.toString().padStart(7);
-  let PadFloat1 = (num) => num.toFixed(1).toString().padStart(7);
-  let FormatPerCent = (num) => num.toFixed(1).toString().padStart(6);
+  let PadFloat1 = (num) => Float1ToString(num).padStart(7);
+  let FormatPerCent = (num) => Float1ToString(num).padStart(6);
   let PadString14 = (left,  right) =>
   {
     if (right==undefined) return left.padEnd(14);
     return  left == undefined ? "" : left.padEnd(14 - right.length) + right;
   }
   
-  let FormatDate = (date) =>
-    date.getDay().toString().padStart(2,"0") + "/" + 
-    date.getMonth().toString().padStart(2,"0") + "/" +
-    date.getFullYear().toString().substr(2,2) + "  " +
-    date.getHours().toString().padStart(2,"0") + ":" +
-    date.getMinutes().toString().padStart(2,"0") + ":" +
-    date.getSeconds().toString().padStart(2,"0");
-  
-
   const operatore = document.getElementById("operatore").value;
   const articolo = document.getElementById("articolo").value;
   const lotto = document.getElementById("lotto").value;
@@ -86,6 +87,7 @@ function SaveTextFile()
   const inizio = new Date(document.getElementById("inizio").value);
   const fine = new Date(document.getElementById("fine").value);
   
+  console.log("inizio "  + inizio.toDateString());
 
   var content = "OPERATORE\n";
   content+= operatore + "\n\n";
@@ -115,7 +117,7 @@ function SaveTextFile()
   pesate.forEach(p => {
 
     let valid = p<=pesomax && p>=pesomin ? "" : " *"
-    content+= "  " + PadInt7(++_i) + " " + PadFloat1(p) + " " + valid + "\n";
+    content+= "  " + PadInt7(++_i) + " " + PadFloat1(p) + " g " + valid + "\n";
     
     if (p<pesomin) _mincount++;
     else if (p>pesomax) _maxcount++;
